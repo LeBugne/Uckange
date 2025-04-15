@@ -1,38 +1,36 @@
-name: Build EXE on Windows
+name: Build and Release EXE
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    tags:
+      - 'v.*'  # ex: v1.0, v2.2.1, etc.
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Cloner le repo
-        uses: actions/checkout@v3
+      - name: Cloner le code
+        uses: actions/checkout@v4
 
       - name: Installer Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: 3.11
 
       - name: Installer les dépendances
         run: |
           python -m pip install --upgrade pip
-          pip install --user pyinstaller
-          if (Test-Path "requirements.txt") {
-            pip install -r requirements.txt
-          }
+          pip install -r requirements.txt
+          pip install pyinstaller
 
-      - name: Compiler le script
+      - name: Compiler le .exe
         run: |
-          $env:PATH += ";$env:USERPROFILE\AppData\Roaming\Python\Python311\Scripts"
-          pyinstaller --onefile --hidden-import=win32timezone main.py
+          pyinstaller --onefile --name tri_contact --hidden-import=win32timezone main.py
 
-      - name: Uploader l'exécutable
-        uses: actions/upload-artifact@v4
+      - name: Créer une Release GitHub avec le .exe
+        uses: softprops/action-gh-release@v2
         with:
-          name: mon-exe-windows
-          path: dist/main.exe
+          files: dist/tri_contact.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
