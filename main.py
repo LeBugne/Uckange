@@ -46,3 +46,6 @@ btn = tk.Button(root, text="Sélectionner le fichier CSV", command=analyser_cont
 btn.pack()
 
 root.mainloop()
+
+input("Appuyez sur Entrée pour fermer le terminal...")
+
