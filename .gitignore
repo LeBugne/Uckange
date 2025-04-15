@@ -1,0 +1,14 @@
+# Types de fichier à ignorer :
+
+# Tous les fichiers qui sont des CSV
+*.csv
+
+# Tous les fichiers qui sont des logs
+*.log
+
+# Dossier de build
+build/
+
+# Fichiers temporaires
+*.tmp
+

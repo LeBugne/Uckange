@@ -1,0 +1,36 @@
+name: Build EXE on Windows
+
+on:
+  push:
+    branches:
+      - main  # ou la branche que tu veux
+  workflow_dispatch:  # permet de lancer manuellement
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Cloner le repo
+        uses: actions/checkout@v3
+
+      - name: Installer Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'  # ou ta version
+
+      - name: Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          if exist requirements.txt pip install -r requirements.txt
+
+      - name: Compiler en .exe
+        run: pyinstaller --onefile main.py
+
+      - name: Upload de l'exécutable
+        uses: actions/upload-artifact@v3
+        with:
+          name: mon-exe-windows
+          path: dist/main.exe
+
