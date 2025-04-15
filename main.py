@@ -24,7 +24,7 @@ def analyser_contacts():
                     if not dernier_envoi[dest] or item.SentOn > dernier_envoi[dest]:
                         dernier_envoi[dest] = item.SentOn
 
-        contacts["dernier_envoi"] = contacts["Adresse e-mail"].map(lambda x: dernier_envoi.get(str(x).lower()))
+        contacts["dernier_envoi"] = contacts["E-mail Address"].map(lambda x: dernier_envoi.get(str(x).lower()))
         output_path = filepath.replace(".csv", "_avec_dates.csv")
         contacts.to_csv(output_path, index=False)
 
