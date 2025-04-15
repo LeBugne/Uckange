@@ -3,6 +3,9 @@
 # Tous les fichiers qui sont des CSV
 *.csv
 
+# les archives 
+*.zip
+
 # Tous les fichiers qui sont des logs
 *.log
 
