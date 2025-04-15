@@ -21,12 +21,15 @@ jobs:
       - name: Installer les dépendances
         run: |
           python -m pip install --upgrade pip
+          pip install --user pyinstaller
           if (Test-Path "requirements.txt") {
             pip install -r requirements.txt
           }
 
       - name: Compiler le script
-        run: pyinstaller --onefile main.py
+        run: |
+          $env:PATH += ";$env:USERPROFILE\AppData\Roaming\Python\Python311\Scripts"
+          pyinstaller --onefile main.py
 
       - name: Uploader l'exécutable
         uses: actions/upload-artifact@v4
