@@ -29,7 +29,8 @@ jobs:
         run: pyinstaller --onefile main.py
 
       - name: Upload de l'exécutable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
+
         with:
           name: mon-exe-windows
           path: dist/main.exe
