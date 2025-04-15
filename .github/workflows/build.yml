@@ -3,7 +3,7 @@ name: Build and Release EXE
 on:
   push:
     tags:
-      - 'v.*'  # ex: v1.0, v2.2.1, etc.
+      - 'v*'  # ex: v1.0, v2.2.1, etc.
 
 jobs:
   build:
