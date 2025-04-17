@@ -10,7 +10,8 @@ def analyser_contacts():
         return
 
     try:
-        contacts = pd.read_csv(filepath)
+        contacts = pd.read_csv(filepath) # On ouvre le csv avec panda qui est très utile pour cela.
+        contacts = contacts.dropna(axis=1,how='all') # On supprime toute les colonnes qui sont entièrement vide, elles ne servent à rien.
 
         outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
         sent_folder = outlook.GetDefaultFolder(5)
@@ -26,13 +27,16 @@ def analyser_contacts():
 
         contacts["dernier_envoi"] = contacts["E-mail Address"].map(lambda x: dernier_envoi.get(str(x).lower()))
         output_path = filepath.replace(".csv", "_avec_dates.csv")
-        contacts.to_csv(output_path, index=False)
+        contacts.to_csv("fichier.csv", index=False, sep=';')
 
-        messagebox.showinfo("Succès", f"Fichier généré :\n{output_path}")
+        messa
+        gebox.showinfo("Succès", f"Fichier généré :\n{output_path}")
 
     except Exception as e:
+        # Afficher l'erreur dans le terminal
+        print(f"Erreur rencontrée : {str(e)}")
+        # Afficher l'erreur dans une boîte de dialogue
         messagebox.showerror("Erreur", str(e))
-
 
 # Interface graphique
 root = tk.Tk()
